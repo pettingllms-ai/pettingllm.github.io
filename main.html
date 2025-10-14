@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="A Reinforcement Learning Approach to Adaptive Multi-Agent Collaboration in Dynamic Environments">
+  <meta name="keywords" content="Multi-Agent Systems, Reinforcement Learning, Collaboration, Adaptive Agents, Hierarchical RL">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>STRONGER TOGETHER: ON-POLICY REINFORCEMENT  LEARNING FOR COLLABORATIVE LLMS</title>
+
+  <link rel="icon" href="./assets/logos/agent.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <!-- Bulma and Icons -->
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/navbar.css">
+  <link rel="stylesheet" href="./static/css/top_button.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/navbar.js"></script>
+  <script src="./static/js/top_button.js"></script>
+  <!-- 在head标签中添加CSS样式 -->
+    <style>
+      /* 导航栏样式 */
+      .navbar {
+        background-color: #f8f9fa;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 999;
+        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-100%);
+      }
+
+      .navbar.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .navbar-item {
+        color: #333;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .navbar-item:hover {
+        background-color: #e9ecef;
+        border-radius: 4px;
+      }
+
+      .navbar-brand {
+        padding: 0.75rem 1rem;
+      }
+         .title.is-1 { 
+        font-size: 4rem;
+      }
+
+         .title.is-3 { 
+        font-size: 3rem;
+      }
+         .title.is-4 { 
+        font-size: 2rem;
+      }
+      .content p {
+        font-size: 1.5rem;
+        line-height: 1.6;
+      }
+      
+      </style>
+  </head>
+
+<body>
+  <!-- Navbar -->
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation" id="stickyNavbar">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="#">
+      <span class="icon"><i class="fas fa-home"></i></span>
+      <span>Table of Contents</span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a href="#introduction" class="navbar-item">Introduction</a>
+      <a href="#Method" class="navbar-item">Method</a>
+      <a href="#results" class="navbar-item">Experimental Results</a>
+      <a href="#BibTeX" class="navbar-item">BibTeX</a>
+    </div>
+  </div>
+</nav>
+
+  <!-- Hero Section -->
+  <section class="hero is-light">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <div class="is-size-5 mb-4">
+        <a href="https://norahyujiezhao.github.io/" class="button is-dark is-rounded" title="Home">
+          <span class="icon"><i class="fas fa-home"></i></span><span>Home</span>
+        </a>
+      </div>
+        <h1 class="title is-1">
+          <img src="assets/logos/agent.png" style="width:1.6em; vertical-align:middle;"> 
+          <span style="vertical-align:middle;">STRONGER TOGETHER:<br> REINFORCEMENT  LEARNING FOR COLLABORATIVE LLMS</span>
+        </h1>
+        <div class="is-size-2 publication-authors">
+          <a href="https://norahyujiezhao.github.io/" target="_blank" title="Yujie Zhao">
+            <strong style="color: rgb(177, 177, 249);">Yujie Zhao</strong><sup>1</sup>
+          </a>,
+          <a href="https://snyhlxde1.github.io/" target="_blank" title="Lanxiang Hu">
+            <strong style="color: rgb(177, 177, 249);">Lanxiang Hu</strong><sup>1</sup>
+          </a>,
+          <a href="https://www.linkedin.com/in/minmin-hou-25555858/" target="_blank" title="Minmin Hou">
+            <strong style="color: rgb(177, 177, 249);">Minmin Hou</strong><sup>2</sup>
+          </a>,
+          <a href="https://www.linkedin.com/in/yang-wang-24aa8180/" target="_blank" title="Yang Wang">
+            <strong style="color: rgb(177, 177, 249);">Yang Wang</strong><sup>2</sup>
+          </a>,
+          <a href="https://cseweb.ucsd.edu/~haozhang/" target="_blank" title="Hao Zhang">
+            <strong style="color: rgb(177, 177, 249);">Hao Zhang</strong><sup>1</sup>
+          </a>,
+          <a href="https://www.linkedin.com/in/dingke/" target="_blank" title="Ke Ding">
+            <strong style="color: rgb(177, 177, 249);">Ke Ding</strong><sup>2</sup>
+          </a>,
+          <a href="https://cseweb.ucsd.edu/~jzhao/index.html" target="_blank" title="Jishen Zhao">
+            <strong style="color: rgb(177, 177, 249);">Jishen Zhao</strong><sup>1</sup>
+          </a>
+        </div>
+        <div class="is-size-4">
+          <sup>1</sup>Department of Computer Science and Engineering, UC San Diego<br/>
+          <sup>2</sup>Intel Corporation<br/>
+        </div>
+        <div class="mt-4">
+          <a href="" class="button is-dark is-rounded" target="_blank">
+            <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+          </a>
+          <a href="https://github.com/pettingllms-ai/PettingLLMs" class="button is-dark is-rounded" target="_blank">
+            <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section" id="introduction">
+    <div class="container">
+      <h2 class="title is-3 has-text-centered">Introduction</h2>
+      <div class="content is-medium has-text-justified">
+        <p>
+          <strong>Multi-Agent System (MAS)</strong> and Reinforcement Learning (RL) are both widely adopted 
+          to improve large language model (LLM) agentic performance. 
+          MAS strengthens task-specialized performance via role-based orchestration; 
+          RL leverages environment rewards to train stronger policies, 
+          such as <strong>Group Relative Policy Optimization (GRPO)</strong>-style optimization. 
+          Yet applying on-policy RL training to MAS is underexplored. 
+          While promising, it poses several challenges. On the algorithm side, 
+          Standard GRPO grouping assumptions fail in MAS because prompts differ by role and turn. 
+          On the system side, the training system needs to support MAS-workflow-based rollouts and on-policy updates for both single and multiple policy models. To address these issues, we introduce AT-GRPO, consisting of (i) an Agent- and Turn-wise grouped RL algorithm tailored for MAS and (ii) a system to support both single-policy and multi-policy training. 
+          Across <strong>game, plan, coding, and math tasks</strong>, <strong>AT-GRPO</strong> demonstrates substantial performance gains across diverse domains. Especially on long-horizon planning tasks, AT-GRPO boosts accuracy from a <strong>14.0–47.0%</strong> single-agent RL baseline to <strong>96.0–99.5%</strong>. 
+          Furthermore, it improves reasoning performance, with an average gain of <strong>3.87–7.62%</strong> on coding and <strong>9.0-17.93%</strong> on math
+        </p>
+      </div>
+      <figure class="image is-3by1 mt-5">
+        <img src="assets/figures/framework.png" alt="Framework overview">
+        <figcaption class="has-text-centered mt-2">Figure 1: Overview of our proposed adaptive multi-agent RL framework.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+   <!-- Method -->
+  <section class="section" id="Method">
+    <div class="container">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+      <div class="columns is-centered">
+        <!-- AT-GRPO Section -->
+        <div class="column is-12">
+          <h3 class="title is-4 has-text-centered">AT-GRPO</h3>
+          <div class="content has-text-justified">
+            <p>
+                Standard Group-Relative Policy Optimization (GRPO) fails in Multi-Agent Systems (MAS) because prompts differ for each agent's role and turn, making fair comparisons impossible. To solve this, we introduce AT-GRPO (Agent- and Turn-wise GRPO), which is built on three key ideas. 
+              </p>
+              <p>
+                First, <strong>Tree-Structured Sampling</strong> creates valid comparison groups by branching exploration at each turn for each agent, sampling multiple actions, and then greedily selecting the best one to continue. Second, <strong>Agent- and Turn-wise Grouping</strong> ensures fair advantage calculation by grouping experiences based on the specific agent and turn. Finally, <strong>Agent-wise Credit Assignment</strong> balances team goals and individual responsibilities by using a mixed reward system that combines a global team reward with a local, role-specific reward.
+              </p>
+          </div>
+          <div class="has-text-centered">
+            <img src="assets/figures/at_grpo.png" alt="AT-GRPO Method diagram" width="100%">
+            <p class="mt-2">Figure 2: Detailed Comparison between Tree-Structured Sampling and Parallel Sampling.</p>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <!-- MAS System Section -->
+        <div class="column is-12">
+          <h3 class="title is-4 has-text-centered">MAS System</h3>
+          <div class="content has-text-justified">
+            <p>
+                Existing RL frameworks are designed for single-agent training and cannot support the concurrent on-policy training of multiple, distinct models required by MAS. We developed a novel training system to overcome this limitation.
+              </p>
+              <p>
+                Our system assigns each model to an independent, GPU-pinned resource pool containing a dedicated <strong>Rollout Worker</strong> for inference and an <strong>Update Worker</strong> for optimization. Environment steps are executed in parallel on a CPU pool. A central <strong>Router</strong> then dispatches the collected trajectory data to the correct Update Worker corresponding to the policy that generated it. This architecture ensures that each policy is trained only on its own on-policy data, enabling clean and concurrent training for multiple agents.
+              </p>
+          </div>
+          <div class="has-text-centered">
+            <img src="assets/figures/MAS_train.png" alt="MAS system diagram" width="75%">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="section" id="results">
+    <div class="container">
+      <h2 class="title is-3 has-text-centered">Experimental Results</h2>
+      <div class="content has-text-justified">
+       <p>
+            We evaluated AT-GRPO using Qwen3 models (1.7B and 8B) across four domains: game, planning, code, and math. Our method consistently delivered substantial performance gains. The most dramatic improvements were seen in long-horizon planning tasks, where MAS + AT-GRPO boosted accuracy from a 14–47% single-agent baseline to an exceptional <strong>96.0–99.5%</strong>. This success is attributed to an emergent collaboration where agents learn specialized, complementary roles.
+        </p>
+        <p>
+            On coding and math benchmarks, our approach also yielded consistent gains. Furthermore, our analysis revealed that the optimal policy structure depends on the task. <strong>Role-specialized policies</strong> are superior for tasks with distinct functions (e.g., Coder and Tester in coding), whereas a <strong>shared policy</strong> can be more effective when roles overlap (e.g., Reasoner and Tool agent in math).
+        </p>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-10 has-text-centered">
+          <img src="assets/results/results.png" alt="Results chart" width="100%">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3 has-text-centered">BibTeX</h2>
+      <pre><code>待补全...</code></pre>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+       This template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+      </p>
+    </div>
+  </footer>
+
+  <button onclick="topFunction()" id="topButton" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+</body>
+  <!-- 在body标签末尾添加JavaScript代码 -->
+  <script>
+  // 添加滚动事件监听器
+  window.addEventListener('scroll', function() {
+    const navbar = document.getElementById('stickyNavbar');
+    const scrollPosition = window.scrollY;
+    
+    // 当滚动位置大于等于100px时显示导航栏
+    if (scrollPosition >= 100) {
+      navbar.classList.add('show');
+    } else {
+      navbar.classList.remove('show');
+    }
+  });
+
+  // 页面加载完成后初始化
+  document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.getElementById('stickyNavbar');
+    // 初始状态为隐藏
+    navbar.classList.remove('show');
+  });
+  </script>
+</html>
