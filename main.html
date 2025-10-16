@@ -6,17 +6,16 @@
   <meta name="description" content="A Reinforcement Learning Approach to Adaptive Multi-Agent Collaboration in Dynamic Environments">
   <meta name="keywords" content="Multi-Agent Systems, Reinforcement Learning, Collaboration, Adaptive Agents, Hierarchical RL">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PettingLLMs: USING ON-POLICY REINFORCEMENT  LEARNING FOR STRONGER MULTI-AGENT SYSTEM</title>
+  <title>PettingLLMs: USING ON-POLICY REINFORCEMENT LEARNING FOR STRONGER MULTI-AGENT SYSTEM</title>
 
   <link rel="icon" href="./assets/logos/agent.png">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
-  <!-- Bulma and Icons -->
   <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="stylesheet" href="./static/css/navbar.css">
   <link rel="stylesheet" href="./static/css/top_button.css">
@@ -25,113 +24,168 @@
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/navbar.js"></script>
   <script src="./static/js/top_button.js"></script>
-  <!-- 在head标签中添加CSS样式 -->
-    <style>
-      /* 导航栏样式 */
-      .navbar {
-        background-color: #f8f9fa;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        z-index: 999;
-        transition: all 0.3s ease;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-100%);
-      }
 
-      .navbar.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
+  <style>
+    /* 导航栏样式 */
+    .navbar {
+      background-color: #f8f9fa;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 999;
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-100%);
+    }
 
-      .navbar-item {
-        color: #333;
-        padding: 0.75rem 1rem;
-        transition: all 0.3s ease;
-      }
+    .navbar.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
 
-      .navbar-item:hover {
-        background-color: #e9ecef;
-        border-radius: 4px;
-      }
+    .navbar-item {
+      color: #333;
+      padding: 0.75rem 1rem;
+      transition: all 0.3s ease;
+    }
 
-      .navbar-brand {
-        padding: 0.75rem 1rem;
-      }
-         .title.is-1 { 
-        font-size: 2.5rem;
-      }
+    .navbar-item:hover {
+      background-color: #e9ecef;
+      border-radius: 4px;
+    }
 
-         .title.is-3 { 
-        font-size: 2rem;
-      }
-         .title.is-4 { 
-        font-size: 1.5rem;
-      }
-      .content p {
-        font-size: 1.1rem;
-        line-height: 1.6;
-      }
-      
-      /* 限制容器最大宽度 */
-      .container.is-max-widescreen {
-        max-width: 1200px;
-      }
-      
-      /* 调整hero部分 */
-      .hero .title.is-1 img {
-        width: 1.2em !important;
-      }
-      
-      .is-size-2 {
-        font-size: 1.5rem !important;
-      }
-      
-      .is-size-4 {
-        font-size: 1.2rem !important;
-      }
-      
-      .is-size-5 {
-        font-size: 1rem !important;
-      }
-      
-      </style>
-  </head>
+    .navbar-brand {
+      padding: 0.75rem 1rem;
+    }
+
+    .title.is-1 {
+      font-size: 3rem;
+    }
+
+    .title.is-3 {
+      font-size: 2.5rem;
+    }
+
+    .title.is-4 {
+      font-size: 1.5rem;
+    }
+
+    .content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* 限制容器最大宽度 */
+    .container.is-max-widescreen {
+      max-width: 1200px;
+    }
+
+    /* 调整hero部分 */
+    .hero .title.is-1 img {
+      width: 1.2em !important;
+    }
+
+    .is-size-2 {
+      font-size: 1.5rem !important;
+    }
+
+    .is-size-4 {
+      font-size: 1.2rem !important;
+    }
+
+    .is-size-5 {
+      font-size: 1rem !important;
+    }
+
+    .results-carousel img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    /* 防止 carousel 内容溢出 */
+    .results-carousel {
+      overflow: hidden;
+    }
+
+    #method-carousel .image-body {
+        display: flex;
+        align-items: center;       /* 垂直居中 */
+        justify-content: center;   /* 水平居中 */
+        min-height: 400px;         /* !!! 关键：设置最小高度，可以根据您最高图片的高度进行调整 !!! */
+        height: 400px;             /* 固定高度确保一致性 */
+        overflow: hidden;
+    }
+    
+    #method-carousel .image-body img {
+        max-height: 100%;
+        width: auto;
+        object-fit: contain; /* 保证图片完整显示且不变形 */
+    }
+    
+    /* 调整 carousel 分页进度条样式 */
+    #method-carousel .carousel-pagination {
+      position: relative !important;
+      margin-top: 25px !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+
+    #method-carousel .carousel-pagination-bullet {
+      background-color: #ccc !important;   /* 非激活状态灰色 */
+      opacity: 1 !important;
+      height: 4px !important;              /* 变成线条 */
+      width: 40px !important;              /* 每段长度 */
+      border-radius: 2px !important;       /* 稍微圆角 */
+      transition: all 0.4s ease !important;
+      border: none !important;             /* 移除边框 */
+      padding: 0 !important;               /* 移除内边距 */
+      margin: 0 !important;                /* 移除外边距 */
+      box-shadow: none !important;         /* 移除阴影 */
+    }
+
+    #method-carousel .carousel-pagination-bullet.is-active {
+      background-color: #000 !important;   /* 激活状态黑色 */
+      width: 60px !important;              /* 稍长，像进度 */
+    }
+  </style>
+</head>
 
 <body>
-  <!-- Navbar -->
-<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation" id="stickyNavbar">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="#">
-      <span class="icon"><i class="fas fa-home"></i></span>
-      <span>Table of Contents</span>
-    </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a href="#introduction" class="navbar-item">Introduction</a>
-      <a href="#Method" class="navbar-item">Method</a>
-      <a href="#demo" class="navbar-item">Demo</a>
-      <a href="#results" class="navbar-item">Experimental Results</a>
-      <a href="#about" class="navbar-item">About Us</a>
-      <a href="#BibTeX" class="navbar-item">BibTeX</a>
+  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation" id="stickyNavbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#">
+        <span class="icon"><i class="fas fa-home"></i></span>
+        <span>Table of Contents</span>
+      </a>
     </div>
-  </div>
-</nav>
 
-  <!-- Hero Section -->
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a href="#introduction" class="navbar-item">Introduction</a>
+        <a href="#Method" class="navbar-item">Method</a>
+        <a href="#demo" class="navbar-item">Demo</a>
+        <a href="#about" class="navbar-item">About Us</a>
+        <a href="#BibTeX" class="navbar-item">BibTeX</a>
+      </div>
+    </div>
+  </nav>
+
   <section class="hero is-light">
     <div class="hero-body">
       <div class="container has-text-centered">
         <div class="is-size-5 mb-4">
-        <a href="https://norahyujiezhao.github.io/" class="button is-dark is-rounded" title="Home">
-          <span class="icon"><i class="fas fa-home"></i></span><span>Home</span>
-        </a>
-      </div>
+          <a href="https://norahyujiezhao.github.io/" class="button is-dark is-rounded" title="Home">
+            <span class="icon"><i class="fas fa-home"></i></span><span>Home</span>
+          </a>
+        </div>
         <h1 class="title is-1">
           <img src="assets/logos/agent.png" style="width:1.6em; vertical-align:middle;"> 
-          <span style="vertical-align:middle;">PettingLLMs: USING ON-POLICY REINFORCEMENT  LEARNING FOR STRONGER MULTI-AGENT SYSTEM</span>
+          <span style="vertical-align:middle;">PettingLLMs: USING ON-POLICY REINFORCEMENT LEARNING FOR STRONGER MULTI-AGENT SYSTEM</span>
         </h1>
         <div class="mt-4">
           <a href="" class="button is-dark is-rounded" target="_blank">
@@ -148,122 +202,169 @@
     </div>
   </section>
 
-  <!-- Abstract -->
   <section class="section" id="introduction">
     <div class="container is-max-widescreen">
-      <h2 class="title is-3 has-text-centered">Introduction</h2>
+      <div class="is-flex is-justify-content-center is-align-items-center mt-4 mb-5">
+        <figure class="image is-32x32 mr-3">
+          <img src="assets/logos/intro.png" alt="Introduction Logo">
+        </figure>
+        <h2 class="title is-3 is-marginless">
+          Introduction
+        </h2>
+      </div>
       <div class="content is-medium has-text-justified">
         <p>
-          <strong>Multi-Agent System (MAS)</strong> and Reinforcement Learning (RL) are both widely adopted 
-          to improve large language model (LLM) agentic performance. 
+          <strong>Multi-Agent System (MAS)</strong> and Reinforcement Learning (RL) are both widely adopted to improve large language model (LLM) agentic performance. 
           MAS strengthens task-specialized performance via role-based orchestration; 
-          RL leverages environment rewards to train stronger policies, 
-          such as <strong>Group Relative Policy Optimization (GRPO)</strong>-style optimization. 
-          Yet applying on-policy RL training to MAS is underexplored. 
-          While promising, it poses several challenges. On the algorithm side, 
-          Standard GRPO grouping assumptions fail in MAS because prompts differ by role and turn. 
-          On the system side, the training system needs to support MAS-workflow-based rollouts and on-policy updates for both single and multiple policy models. To address these issues, we introduce AT-GRPO, consisting of (i) an Agent- and Turn-wise grouped RL algorithm tailored for MAS and (ii) a system to support both single-policy and multi-policy training. 
-          Across <strong>game, plan, coding, and math tasks</strong>, <strong>AT-GRPO</strong> demonstrates substantial performance gains across diverse domains. Especially on long-horizon planning tasks, AT-GRPO boosts accuracy from a <strong>14.0–47.0%</strong> single-agent RL baseline to <strong>96.0–99.5%</strong>. 
-          Furthermore, it improves reasoning performance, with an average gain of <strong>3.87–7.62%</strong> on coding and <strong>9.0-17.93%</strong> on math
+          RL leverages environment rewards to train stronger policies, such as <strong>Group Relative Policy Optimization (GRPO)</strong>-style optimization. 
+          Yet applying on-policy RL training to MAS is underexplored. While promising, it poses several challenges. On the algorithm side, Standard GRPO grouping assumptions fail in MAS because prompts differ by role and turn. On the system side, the training system needs to support MAS-workflow-based rollouts and on-policy updates for both single and multiple policy models. To address these issues, we introduce AT-GRPO, consisting of (i) an Agent- and Turn-wise grouped RL algorithm tailored for MAS and (ii) a system to support both single-policy and multi-policy training. Across <strong>game, plan, coding, and math tasks</strong>, <strong>AT-GRPO</strong> demonstrates substantial performance gains across diverse domains. Especially on long-horizon planning tasks, AT-GRPO boosts accuracy from a <strong>14.0–47.0%</strong> single-agent RL baseline to <strong>96.0–99.5%</strong>. Furthermore, it improves reasoning performance, with an average gain of <strong>3.87–7.62%</strong> on coding and <strong>9.0-17.93%</strong> on math.
         </p>
       </div>
-      <figure class="image is-3by1 mt-5">
-        <img src="assets/figures/workflow.png" alt="Workflow overview">
-        <figcaption class="has-text-centered mt-2">Figure 1: Overview of our proposed adaptive multi-agent RL framework.</figcaption>
+      <figure class="mt-5" style="text-align: center;">
+        <img src="assets/figures/workflow.png" alt="Workflow overview" style="width: 75%; display: inline-block;">
+        <div style="display: inline-block; width: 75%; text-align: left;">
+          <figcaption style="font-size: 1rem; color: #0a0a0a; margin-top: 10px;">
+            MAS workflow across different domains. (a) <strong> Role-based coordination</strong> : code generation
+            via a coder–tester loop. (b) Different <strong> task-specific workflows</strong>  for Game/Plan, Code, and Math
+          </figcaption>
+        </div>
       </figure>
     </div>
   </section>
 
-   <!-- Method -->
-  <section class="section" id="Method">
-    <div class="container is-max-widescreen">
-      <h2 class="title is-3 has-text-centered">Method</h2>
-      <div class="columns is-centered">
-        <!-- AT-GRPO Section -->
-        <div class="column is-12">
-          <h3 class="title is-4 has-text-centered">AT-GRPO</h3>
-          <div class="content has-text-justified">
-            <p>
-                Standard Group-Relative Policy Optimization (GRPO) fails in Multi-Agent Systems (MAS) because prompts differ for each agent's role and turn, making fair comparisons impossible. To solve this, we introduce AT-GRPO (Agent- and Turn-wise GRPO), which is built on three key ideas. 
-              </p>
-              <p>
-                First, <strong>Tree-Structured Sampling</strong> creates valid comparison groups by branching exploration at each turn for each agent, sampling multiple actions, and then greedily selecting the best one to continue. Second, <strong>Agent- and Turn-wise Grouping</strong> ensures fair advantage calculation by grouping experiences based on the specific agent and turn. Finally, <strong>Agent-wise Credit Assignment</strong> balances team goals and individual responsibilities by using a mixed reward system that combines a global team reward with a local, role-specific reward.
-              </p>
-          </div>
-          <div class="has-text-centered">
-            <img src="assets/figures/fig_2.png" alt="AT-GRPO Method diagram" width="100%">
-            <p class="mt-2">Figure 2: Detailed Comparison between Tree-Structured Sampling and Parallel Sampling.</p>
-          </div>
-        </div>
-      </div>
-      <div class="columns is-centered">
-        <!-- MAS System Section -->
-        <div class="column is-12">
-          <h3 class="title is-4 has-text-centered">MAS System</h3>
-          <div class="content has-text-justified">
-            <p>
-                Existing RL frameworks are designed for single-agent training and cannot support the concurrent on-policy training of multiple, distinct models required by MAS. We developed a novel training system to overcome this limitation.
-              </p>
-              <p>
-                Our system assigns each model to an independent, GPU-pinned resource pool containing a dedicated <strong>Rollout Worker</strong> for inference and an <strong>Update Worker</strong> for optimization. Environment steps are executed in parallel on a CPU pool. A central <strong>Router</strong> then dispatches the collected trajectory data to the correct Update Worker corresponding to the policy that generated it. This architecture ensures that each policy is trained only on its own on-policy data, enabling clean and concurrent training for multiple agents.
-              </p>
-          </div>
-          <div class="has-text-centered">
-            <img src="assets/figures/worker.png" alt="MAS system diagram" width="75%">
-          </div>
-        </div>
-      </div>
+    <section class="section" id="Method">
+  <div class="container is-max-widescreen">
+    <div style="text-align: center; display: flex; align-items: center; justify-content: center;">
+      <figure class="image is-32x32 mr-3">
+        <img src="assets/logos/method.png" alt="Introduction Logo">
+      </figure>
+      <h2 class="title is-3" style="margin: 0;">Method</h2>
     </div>
-  </section>
 
-  <!-- Demo -->
+    <div id="method-carousel" class="carousel results-carousel">
+      
+      <!-- 第一项：AT-GRPO -->
+      <div class="item">
+        <div style="margin-bottom: 20px; text-align: center;">
+          <h4 class="subtitle is-5 has-text-weight-bold">AT-GRPO</h4>
+        </div>
+        <div class="image-body">
+          <img src="assets/figures/fig_2.png" 
+               alt="AT-GRPO Method diagram" 
+               style="width: 100%; max-width: 600px;"
+               loading="lazy">
+        </div>
+        <h3 class="subtitle has-text-centered" style="margin-top: 20px;">
+          <div style="text-align: justify;">
+          <strong>AT-GRPO (Agent- and Turn-wise GRPO)</strong> is founded on three key principles.
+          First, <strong>Tree-Structured Sampling constructs</strong> valid comparison groups by branching the exploration at each turn for every agent, sampling multiple actions, and greedily selecting the optimal one to proceed.
+          Second, <strong>Agent- and Turn-wise Grouping</strong> enables fair advantage estimation by grouping experiences according to both the agent and the corresponding turn.
+          Finally, <strong>Agent-wise Credit Assignment</strong> achieves a balance between collective objectives and individual responsibilities through a mixed reward scheme that integrates a global team reward with a local, role-specific reward.
+          </div>
+        </h3>
+      </div>
+
+      <!-- 第二项：Multi-Agent Training System -->
+      <div class="item">
+        <div style="margin-bottom: 20px; text-align: center;">
+          <h4 class="subtitle is-5 has-text-weight-bold">MAS TRAINING SYSTEM</h4>
+        </div>
+        <div class="image-body">
+          <img src="assets/figures/worker.png" 
+               alt="MAS system diagram" 
+               style="max-width: 600px; height: 100%; width: auto;">
+        </div>
+        <h3 class="subtitle has-text-centered" style="margin-top: 20px;">
+          <div style="text-align: justify;">
+          In our MAS training system, each model is assigned an independent, GPU-pinned resource pool that includes a dedicated <strong>Rollout Worker</strong> for inference and an <strong>Update Worker</strong>for optimization.
+          Environment interactions are executed in parallel across a CPU pool, while a <strong>central Router</strong> dispatches the collected trajectories to the corresponding Update Worker associated with the policy that generated them.
+          </div>
+        </h3>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
   <section class="section" id="demo">
-    <div class="container is-max-widescreen">
+    <div class="container is-max-widescreen class">
       <h2 class="title is-3 has-text-centered">Demo</h2>
       <div class="columns is-centered">
         <div class="column is-8">
           <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
             <iframe
-        src="https://www.youtube.com/embed/8WM-gVTrSBc"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-        style="position:absolute;top:0;left:0;width:100%;height:100%;"
-        referrerpolicy="strict-origin-when-cross-origin">
-      </iframe>
+              src="https://www.youtube.com/embed/8WM-gVTrSBc"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              style="position:absolute;top:0;left:0;width:100%;height:100%;"
+              referrerpolicy="strict-origin-when-cross-origin">
+            </iframe>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Results -->
-  <section class="section" id="results">
+    <section class="section" id="case-study">
     <div class="container is-max-widescreen">
-      <h2 class="title is-3 has-text-centered">Experimental Results</h2>
-      <div class="content has-text-justified">
-       <p>
-            We evaluated AT-GRPO using Qwen3 models (1.7B and 8B) across four domains: game, planning, code, and math. Our method consistently delivered substantial performance gains. The most dramatic improvements were seen in long-horizon planning tasks, where MAS + AT-GRPO boosted accuracy from a 14–47% single-agent baseline to an exceptional <strong>96.0–99.5%</strong>. This success is attributed to an emergent collaboration where agents learn specialized, complementary roles.
-        </p>
-        <p>
-            On coding and math benchmarks, our approach also yielded consistent gains. Furthermore, our analysis revealed that the optimal policy structure depends on the task. <strong>Role-specialized policies</strong> are superior for tasks with distinct functions (e.g., Coder and Tester in coding), whereas a <strong>shared policy</strong> can be more effective when roles overlap (e.g., Reasoner and Tool agent in math).
-        </p>
+      <div class="is-flex is-justify-content-center is-align-items-center mt-4 mb-5">
+        <figure class="image is-128x128 mr-3">
+          <img src="assets/figures/logo.svg" alt="Case Study Logo">
+        </figure>
+        <h2 class="title is-3 is-marginless">
+          Case Study
+        </h2>
       </div>
       <div class="columns is-centered">
-        <div class="column is-10 has-text-centered">
-          <img src="assets/results/results.png" alt="Results chart" width="100%">
+        <div class="column is-half">
+          <div class="box">
+            <h3 class="title is-4 has-text-centered">MAS for Game</h3>
+            <figure class="image is-flex is-justify-content-center my-4">
+              <img src="assets/figures/MASforgame.png" alt="Game Playing Case Study" style="width:90%;">
+            </figure>
+            <div class="content is-medium">
+              <p>
+                Task:  Coder writes a solution; Unit-Tester writes tests. Terminate=all tests pass. Otherwise: each agent revises its own previous output using the environment feedback/results (Coder fixes code; Unit-Tester fixes unit test), then re-run.
+              </p>
+              <p>
+                Before RL: The Plan Agent gets a valid path for the box from Tool agent but completely misses the point. It tries to follow the box's path itself, runs straight into a wall, and fails instantly. It doesn't understand its job is to push the box, not be the box.
+              </p>
+              <p>
+                After on-policy RL in MAS:  RL teaches the agent the difference. It learns that rewards come from moving the box along the designated path. This insight forces it to discover the correct low-level strategy: first, navigate behind the box, then execute the push
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="box">
+            <h3 class="title is-4 has-text-centered">MAS for Code</h3>
+            <figure class="image is-flex is-justify-content-center my-4">
+              <img src="assets/figures/MASforcode.png" alt="Code Generation Case Study" style="width:100%;">
+            </figure>
+            <div class="content is-medium">
+              <p>
+                Task:  Coder writes a solution; Unit-Tester writes tests. Terminate=all tests pass. Otherwise: each agent revises its own previous output using the environment feedback/results (Coder fixes code; Unit-Tester fixes unit test), then re-run.
+              </p>
+              <p>
+                Before RL: The Coder agent cannot generate output or produces incorrectly formatted output. The Unit-Tester agent either creates irrelevant tests or has mismatched expectations about the code interface. Without RL guidance, the collaboration fails as the agents cannot establish a consistent input-output contract.
+              </p>
+              <p>
+                After on-policy RL in MAS: Through RL training with AT-GRPO, both agents learn to collaborate more effectively. The Coder learns to write more robust code that considers potential test cases, while the Tester learns to create meaningful but reasonable test cases. This coordinated improvement leads to a much higher success rate in the code-test cycle.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- About Us -->
   <section class="section" id="about">
     <div class="container is-max-widescreen">
       <h2 class="title is-3 has-text-centered">About Us</h2>
       <div class="columns is-multiline is-centered mt-5">
-        <!-- PettingLLMs Team Members -->
         <div class="column is-4">
           <div class="box" style="height: 100%;">
             <h3 class="title is-4 has-text-centered" style="color: #3273dc;">PettingLLMs Team Members</h3>
@@ -314,9 +415,7 @@
               </ul>
             </div>
           </div>
-        
-      </div>
-        <!-- Advisors -->
+        </div>
         <div class="column is-4">
           <div class="box" style="height: 100%;">
             <h3 class="title is-4 has-text-centered" style="color: #3273dc;">Advisors</h3>
@@ -347,9 +446,6 @@
           </div>
         </div>
       </div>
-        <!-- Collaborators -->
-        
-      
       <div class="content has-text-centered mt-5">
         <p class="is-size-5">
           <strong>Affiliation:</strong> Department of Computer Science and Engineering, UC San Diego
@@ -358,7 +454,6 @@
     </div>
   </section>
 
-  <!-- BibTeX -->
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title is-3 has-text-centered">BibTeX</h2>
@@ -366,11 +461,10 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="content has-text-centered">
       <p>
-       This template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+        This template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
       </p>
     </div>
   </footer>
@@ -379,27 +473,35 @@
     <i class="fas fa-arrow-up"></i>
   </button>
 
-</body>
-  <!-- 在body标签末尾添加JavaScript代码 -->
+  <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
   <script>
-  
-  window.addEventListener('scroll', function() {
-    const navbar = document.getElementById('stickyNavbar');
-    const scrollPosition = window.scrollY;
-    
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('stickyNavbar');
+      const scrollPosition = window.scrollY;
 
-    if (scrollPosition >= 100) {
-      navbar.classList.add('show');
-    } else {
+      if (scrollPosition >= 100) {
+        navbar.classList.add('show');
+      } else {
+        navbar.classList.remove('show');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const navbar = document.getElementById('stickyNavbar');
       navbar.classList.remove('show');
-    }
-  });
-
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const navbar = document.getElementById('stickyNavbar');
-
-    navbar.classList.remove('show');
-  });
+    });
   </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      bulmaCarousel.attach('#method-carousel', { 
+        slidesToScroll: 1,
+        slidesToShow: 1, 
+        loop: true,     
+        pagination: true 
+      });
+    });
+  </script>
+  
+</body>
 </html>
