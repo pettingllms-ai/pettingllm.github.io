@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PettingLLMs: USING ON-POLICY REINFORCEMENT LEARNING FOR STRONGER MULTI-AGENT SYSTEM</title>
 
-  <link rel="icon" href="./assets/logos/agent.png">
+  <link rel="icon" href="./assets/figures/logo.svg">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
@@ -169,8 +169,8 @@
         <a href="#introduction" class="navbar-item">Introduction</a>
         <a href="#Method" class="navbar-item">Method</a>
         <a href="#demo" class="navbar-item">Demo</a>
+        <a href="#case-study" class="navbar-item">Case Study</a>
         <a href="#about" class="navbar-item">About Us</a>
-        <a href="#BibTeX" class="navbar-item">BibTeX</a>
       </div>
     </div>
   </nav>
@@ -178,13 +178,8 @@
   <section class="hero is-light">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <div class="is-size-5 mb-4">
-          <a href="https://norahyujiezhao.github.io/" class="button is-dark is-rounded" title="Home">
-            <span class="icon"><i class="fas fa-home"></i></span><span>Home</span>
-          </a>
-        </div>
         <h1 class="title is-1">
-          <img src="assets/logos/agent.png" style="width:1.6em; vertical-align:middle;"> 
+          <img src="assets/figures/logo.svg" style="width:1.6em; vertical-align:middle;"> 
           <span style="vertical-align:middle;">PettingLLMs: USING ON-POLICY REINFORCEMENT LEARNING FOR STRONGER MULTI-AGENT SYSTEM</span>
         </h1>
         <div class="mt-4">
@@ -196,6 +191,12 @@
           </a>
           <a href="https://www.notion.so/STRONGER-TOGETHER-ON-POLICY-REINFORCEMENT-LEARNING-FOR-COLLABORATIVE-LLMS-2833b123b9438102b496d3673c8b4094?source=copy_link" class="button is-dark is-rounded" target="_blank">
             <span class="icon"><i class="fas fa-blog"></i></span><span>Blog</span>
+          </a>
+          <a href="https://www.youtube.com/embed/8WM-gVTrSBc" class="button is-dark is-rounded" target="_blank">
+            <span class="icon"><i class="fas fa-video"></i></span><span>Demo</span>
+          </a>
+          <a href="https://pettingllms-docs.readthedocs.io/en/latest/" class="button is-dark is-rounded" target="_blank">
+            <span class="icon"><i class="fas fa-book"></i></span><span>Docs</span>
           </a>
         </div>
       </div>
@@ -349,10 +350,10 @@
                 Task:  Coder writes a solution; Unit-Tester writes tests. Terminate=all tests pass. Otherwise: each agent revises its own previous output using the environment feedback/results (Coder fixes code; Unit-Tester fixes unit test), then re-run.
               </p>
               <p>
-                Before RL: The Coder agent cannot generate output or produces incorrectly formatted output. The Unit-Tester agent either creates irrelevant tests or has mismatched expectations about the code interface. Without RL guidance, the collaboration fails as the agents cannot establish a consistent input-output contract.
+                Before RL: The Plan Agent gets a valid path for the box from Tool agent but completely misses the point. It tries to follow the box's path itself, runs straight into a wall, and fails instantly. It doesn't understand its job is to push the box, not be the box.
               </p>
               <p>
-                After on-policy RL in MAS: Through RL training with AT-GRPO, both agents learn to collaborate more effectively. The Coder learns to write more robust code that considers potential test cases, while the Tester learns to create meaningful but reasonable test cases. This coordinated improvement leads to a much higher success rate in the code-test cycle.
+                After on-policy RL in MAS:  RL teaches the agent the difference. It learns that rewards come from moving the box along the designated path. This insight forces it to discover the correct low-level strategy: first, navigate behind the box, then execute the push.
               </p>
             </div>
           </div>
@@ -454,12 +455,6 @@
     </div>
   </section>
 
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <h2 class="title is-3 has-text-centered">BibTeX</h2>
-      <pre><code>待补全...</code></pre>
-    </div>
-  </section>
 
   <footer class="footer">
     <div class="content has-text-centered">
